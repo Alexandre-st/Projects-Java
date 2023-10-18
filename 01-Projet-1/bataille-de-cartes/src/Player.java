@@ -26,16 +26,22 @@ public class Player {
     return null;
   }
 
+  // Pour attribuer un nom à la création du joueur
+  public String getName() {
+    return name;
+  }
+
   public int getScore() {
     return score;
   }
 
   public void incrementScore(int score) {
-    this.score = score++;
+    this.score += score;
   }
 
-  // To string
-  public void showHand() {
-    System.out.println(name + "'s hand: " + hand);
+  // Retourne l'inverse de main vide. Pour déterminer lors de la boucle
+  // que les joueurs possède des cartes.
+  public boolean emptyHand() {
+    return !hand.isEmpty();
   }
 }
