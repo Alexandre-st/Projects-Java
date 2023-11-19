@@ -3,21 +3,37 @@ import java.util.ArrayList;
 public class Player implements ActionsPlayer {
 
     private String name;
+    private int life;
     private ArrayList<Weapon> weapons;
     private double money;
+    Caste caste;
 
-    public Player(String name) {
+    public Player(String name, int life, double money, Caste caste) {
         this.name = name;
+        this.life = life;
         this.money = 50;
         this.weapons = new ArrayList<Weapon>();
+        this.caste = caste;
     }
 
     public String getName() {
         return this.name;
     }
 
+    public String getCaste() {
+        return this.caste.getCaste();
+    }
+
     public ArrayList<Weapon> getWeapons() {
         return this.weapons;
+    }
+
+    public int getLife() {
+        return this.life;
+    }
+
+    public double getMoney() {
+        return this.money;
     }
 
     @Override

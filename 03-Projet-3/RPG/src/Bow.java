@@ -4,7 +4,7 @@ public class Bow extends Weapon {
     private static final double PRICE = 10;
 
     public Bow() {
-        super("Bow", DAMAGE, PRICE);
+        super("Arc", DAMAGE, PRICE);
     }
 
     @Override

@@ -4,7 +4,7 @@ public class Hammer extends Weapon {
     private static final double PRICE = 10;
 
     public Hammer() {
-        super("Hammer", DAMAGE, PRICE);
+        super("Marteau", DAMAGE, PRICE);
     }
 
     @Override

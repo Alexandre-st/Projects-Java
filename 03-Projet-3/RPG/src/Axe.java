@@ -6,7 +6,7 @@ public class Axe extends Weapon {
     private static final double PRICE = 5;
 
     public Axe() {
-        super("Axe", DAMAGE, PRICE);
+        super("Hache", DAMAGE, PRICE);
     }
 
     @Override
