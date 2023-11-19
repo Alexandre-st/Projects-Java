@@ -58,9 +58,10 @@ public class MainGame {
                 switch (choice) {
                     case 1:
                         store.printWeaponsList();
-                        System.out.println("Quelle arme voulez-vous acheter ?");
+                        System.out.println("Alors Quelle arme voulez-vous acheter ?");
                         int weaponChoice = scanner.nextInt();
                         p.buyWeapon(store.buyWeapon(weaponChoice));
+                        System.out.println("Il vous reste donc " + p.getMoney() + " pièces d'or.");
                         break;
                     case 2:
                         System.out.println("Vous quittez le magasin.");
@@ -71,9 +72,6 @@ public class MainGame {
                 }
                 break;
             }
-            // store.printWeaponsList();
-
-            // p.buyWeapon(store.getWeapon(0));
         }
 
     }
