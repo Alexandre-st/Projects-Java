@@ -9,7 +9,7 @@ public class MainGame {
 
             // Add castes
             Caste elfe = new Caste("Elfe", 10, 5);
-            Caste orc = new Caste("Orc", 5, 10);
+            Caste orc = new Caste("Orc", 05, 10);
             Caste mage = new Caste("Mage", 15, 15);
             Caste warrior = new Caste("Guerrier", 20, 10);
 
@@ -36,41 +36,46 @@ public class MainGame {
                     castChoose = warrior;
                     break;
                 default:
-                    castChoose = orc; // default caste
-                    break;
+                    castChoose = orc; // default caste3
             }
 
             Player p = new Player(name, 100, 50, castChoose);
 
             System.out.println("Je m'apelle " + p.getName() + ", " +
                     "je suis un " + p.getCaste() + "." + " Je possède "
-                    + p.getLife() + " points de vie et " + p.getMoney() + " pièces d'or.");
-
+                    + (p.getLife() + p.getLifeBonus()) + " points de vie et " + p.getMoney() + " pièces d'or.");
             WeaponStore store = new WeaponStore();
 
             while (true) {
                 System.out.println("Que voulez-vous faire ?");
                 System.out.println("1. Acheter une arme");
-                System.out.println("2. Quitter le magasin");
+                System.out.println("2. Attaquer le monstre");
+                System.out.println("3. Fuir le combat");
+                // System.out.println("4. Quitter le magasin");
 
                 int choice = scanner.nextInt();
 
                 switch (choice) {
                     case 1:
                         store.printWeaponsList();
-                        System.out.println("Alors Quelle arme voulez-vous acheter ?");
+                        System.out.println("Alors quelle arme voulez-vous acheter ?");
                         int weaponChoice = scanner.nextInt();
                         p.buyWeapon(store.buyWeapon(weaponChoice));
                         System.out.println("Il vous reste donc " + p.getMoney() + " pièces d'or.");
                         break;
                     case 2:
-                        System.out.println("Vous quittez le magasin.");
+                        System.out.println("Vous attaquez le monstre. Fin du jeu.");
                         break;
+                    case 3:
+                        System.out.println("Vous fuyez le combat.");
+                        System.exit(0);
+                        break;
+                    // case 4:
+                    // System.out.println("Vous quittez le magasin.");
+                    // break;
                     default:
-                        System.out.println("Choix invalide.");
-                        break;
+                        System.out.println("Choix invalide. Veuillez recommencer.");
                 }
-                break;
             }
         }
 

@@ -12,4 +12,8 @@ public class Caste {
   public String getCaste() {
     return this.casteChoose;
   }
+
+  public int getLifeBonus() {
+    return this.lifeBonus;
+  }
 }

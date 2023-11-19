@@ -24,6 +24,10 @@ public class Player implements ActionsPlayer {
         return this.caste.getCaste();
     }
 
+    public int getLifeBonus() {
+        return this.caste.getLifeBonus();
+    }
+
     public ArrayList<Weapon> getWeapons() {
         return this.weapons;
     }
