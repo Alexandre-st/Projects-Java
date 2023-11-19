@@ -36,7 +36,7 @@ public class MainGame {
                     castChoose = warrior;
                     break;
                 default:
-                    castChoose = orc; // default caste3
+                    castChoose = orc; // default caste
             }
 
             Player p = new Player(name, 100, 50, castChoose);
@@ -49,9 +49,8 @@ public class MainGame {
             while (true) {
                 System.out.println("Que voulez-vous faire ?");
                 System.out.println("1. Acheter une arme");
-                System.out.println("2. Attaquer le monstre");
+                System.out.println("2. Entrer sur la map vers le château de la mort");
                 System.out.println("3. Fuir le combat");
-                // System.out.println("4. Quitter le magasin");
 
                 int choice = scanner.nextInt();
 
@@ -64,15 +63,52 @@ public class MainGame {
                         System.out.println("Il vous reste donc " + p.getMoney() + " pièces d'or.");
                         break;
                     case 2:
-                        System.out.println("Vous attaquez le monstre. Fin du jeu.");
-                        break;
+                        System.out.println(
+                                "Bienvenue sur les terres de la mort. Faites attention ce monde est parcouru d'obstacles et de monstres.");
+                        System.out.println(
+                                "Vous êtes actuellement dans la forêt des ténèbres. Vous devez vous rendre au château de la mort.");
+                        System.out.println("Utilisez les touches Z, Q, S, D pour vous déplacer.");
+
+                        Carte carte = new Carte(10, 10);
+
+                        while (true) {
+                            carte.showCarte();
+
+                            System.out.println("Entrez une direction : (Haut : Z, Gauche : Q, Droite : S, Bas : W)");
+                            char direction = scanner.next().charAt(0);
+
+                            int moveX = 0;
+                            int moveY = 0;
+
+                            switch (Character.toUpperCase(direction)) {
+                                case 'Z':
+                                    moveX = -1;
+                                    break;
+                                case 'W':
+                                    moveX = 1;
+                                    break;
+                                case 'Q':
+                                    moveY = -1;
+                                    break;
+                                case 'D':
+                                    moveY = 1;
+                                    break;
+                                default:
+                                    System.out.println("Direction invalide. Veuillez recommencer.");
+                            }
+                            carte.movePlayer(moveX, moveY);
+
+                            if (carte.isGoal()) {
+                                System.out.println(
+                                        "Felicitations Champion ! Tu es en vie, c'est ici que nos chemins se séparent.");
+                                System.exit(0);
+                                break;
+                            }
+                        }
                     case 3:
                         System.out.println("Vous fuyez le combat.");
                         System.exit(0);
                         break;
-                    // case 4:
-                    // System.out.println("Vous quittez le magasin.");
-                    // break;
                     default:
                         System.out.println("Choix invalide. Veuillez recommencer.");
                 }
