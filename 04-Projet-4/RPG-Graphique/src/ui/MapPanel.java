@@ -15,7 +15,7 @@ public class MapPanel extends JPanel {
 
     public MapPanel(Map map) {
         this.mapGrid = map.getMap();
-        ImageIcon img = new ImageIcon("../link.png");
+        ImageIcon img = new ImageIcon("../ui/link.png");
         this.playerImage = img.getImage();
     }
 
@@ -58,4 +58,7 @@ public class MapPanel extends JPanel {
         return new Dimension(500, 300);
     }
 
+    public int[][] getMap() {
+        return this.mapGrid;
+    }
 }

@@ -4,11 +4,10 @@ import java.util.Arrays;
 
 public class Map {
     private static final int[][] MAP_TEMPLATE_DEFAULT = {
-            { 2, 0, 1, 1, 0 },
-            { 1, 0, 1, 1, 0 },
-            { 1, 0, 0, 1, 0 },
-            { 1, 1, 0, 0, 0 },
-            { 0, 0, 1, 1, 2 },
+            { 2, 0, 1, 1 },
+            { 1, 0, 1, 1 },
+            { 1, 0, 0, 1 },
+            { 1, 1, 0, 0 },
     };
 
     private int[][] map;
@@ -17,7 +16,8 @@ public class Map {
         // Copier la matrice de modèle pour éviter les modifications indésirables
         this.map = new int[MAP_TEMPLATE_DEFAULT.length][];
         for (int i = 0; i < MAP_TEMPLATE_DEFAULT.length; i++) {
-            this.map[i] = Arrays.copyOf(MAP_TEMPLATE_DEFAULT[i], MAP_TEMPLATE_DEFAULT[i].length);
+            this.map[i] = Arrays.copyOf(MAP_TEMPLATE_DEFAULT[i],
+                    MAP_TEMPLATE_DEFAULT[i].length);
         }
     }
 
@@ -30,4 +30,33 @@ public class Map {
         }
         return mapCopy;
     }
+
+    public boolean isWall(int row, int col) {
+        return map[row][col] == 1;
+    }
 }
+
+// package game;
+
+// public class Map {
+// static final int[][] MAP_TEMPLATE_DEFAULT = {
+// { 2, 0, 1, 1 },
+// { 1, 0, 1, 1 },
+// { 1, 0, 0, 1 },
+// { 1, 1, 0, 0 },
+// };
+
+// private int[][] map;
+
+// public Map() {
+// this.map = MAP_TEMPLATE_DEFAULT;
+// }
+
+// public int[][] getMap() {
+// return this.map;
+// }
+
+// public boolean isWall(int row, int col) {
+// return map[row][col] == 1;
+// }
+// }

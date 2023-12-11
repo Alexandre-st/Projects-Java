@@ -23,8 +23,6 @@ public class MenuStartPanel extends JPanel {
     private JRadioButton radioElf;
     private JRadioButton radioOrc;
 
-    private JButton okButton;
-
     public MenuStartPanel(GameInputs gameInputs) {
         this.gameInputs = gameInputs;
         initComponents();

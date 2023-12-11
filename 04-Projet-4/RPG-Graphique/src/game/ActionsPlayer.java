@@ -1,4 +1,4 @@
-public interface ActionsPlayer {
+// public interface ActionsPlayer {
 
-    void buyWeapon(Weapon w);
-}
+// void buyWeapon(Weapon w);
+// }

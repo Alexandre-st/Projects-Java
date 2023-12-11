@@ -35,8 +35,11 @@ public class MainGUI {
         // Create the main panel in which graphical components will be defined
         GamePanel gamePanel = new GamePanel(game);
 
+        window.addKeyListener(gamePanel);
+
         window.add(gamePanel);
         window.pack();
+        window.setVisible(true);
         // window.validate();
 
     }
