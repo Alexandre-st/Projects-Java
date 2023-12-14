@@ -4,10 +4,22 @@ import java.util.Arrays;
 
 public class Map {
     private static final int[][] MAP_TEMPLATE_DEFAULT = {
-            { 2, 0, 1, 1 },
-            { 1, 0, 1, 1 },
-            { 1, 0, 0, 1 },
-            { 1, 1, 0, 0 },
+            { 2, 0, 1, 1, 0, 0, 1, 1 },
+            { 1, 0, 1, 1, 0, 1, 0, 1 },
+            { 1, 0, 0, 1, 0, 1, 0, 1 },
+            { 1, 1, 0, 0, 0, 1, 0, 1 },
+            { 0, 1, 1, 0, 1, 1, 0, 1 },
+            { 1, 0, 1, 0, 0, 0, 0, 1 },
+            { 1, 0, 1, 1, 0, 1, 0, 0 },
+            { 1, 1, 3, 0, 0, 1, 1, 0 },
+            { 0, 1, 1, 0, 1, 1, 1, 0 },
+            { 1, 0, 1, 0, 0, 0, 1, 0 },
+            { 1, 0, 1, 1, 0, 1, 0, 0 },
+            { 1, 1, 0, 0, 0, 1, 0, 1 },
+            { 0, 1, 1, 0, 1, 0, 0, 1 },
+            { 1, 0, 1, 0, 0, 0, 1, 1 },
+            { 1, 0, 1, 1, 1, 0, 0, 1 },
+            { 1, 1, 0, 0, 0, 1, 0, 0 },
     };
 
     private int[][] map;
@@ -35,28 +47,3 @@ public class Map {
         return map[row][col] == 1;
     }
 }
-
-// package game;
-
-// public class Map {
-// static final int[][] MAP_TEMPLATE_DEFAULT = {
-// { 2, 0, 1, 1 },
-// { 1, 0, 1, 1 },
-// { 1, 0, 0, 1 },
-// { 1, 1, 0, 0 },
-// };
-
-// private int[][] map;
-
-// public Map() {
-// this.map = MAP_TEMPLATE_DEFAULT;
-// }
-
-// public int[][] getMap() {
-// return this.map;
-// }
-
-// public boolean isWall(int row, int col) {
-// return map[row][col] == 1;
-// }
-// }

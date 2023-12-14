@@ -15,7 +15,8 @@ public class MapPanel extends JPanel {
 
     public MapPanel(Map map) {
         this.mapGrid = map.getMap();
-        ImageIcon img = new ImageIcon("../ui/link.png");
+        ImageIcon img = new ImageIcon(
+                "/Users/alexandresaint-prix/Developer/JAVA-Projects/04-Projet-4/RPG-Graphique/src/ui/link.png");
         this.playerImage = img.getImage();
     }
 
@@ -39,6 +40,9 @@ public class MapPanel extends JPanel {
                     case 2:
                         color = Color.CYAN;
                         break;
+                    case 3:
+                        color = Color.GREEN;
+                        break;
                     default:
                         color = Color.WHITE;
                 }
@@ -55,7 +59,7 @@ public class MapPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(500, 300);
+        return new Dimension(800, 600);
     }
 
     public int[][] getMap() {

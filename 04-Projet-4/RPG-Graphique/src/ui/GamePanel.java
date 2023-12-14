@@ -12,6 +12,8 @@ public class GamePanel extends JPanel implements KeyListener {
 
     private MapPanel mapPanel;
     private Game game;
+    // Panel to display commands
+    private JPanel commandsPanel;
 
     public GamePanel(Game game) {
         this.game = game;
@@ -21,11 +23,40 @@ public class GamePanel extends JPanel implements KeyListener {
 
         // Add MapPanel to GamePanel
         this.mapPanel = new MapPanel(game.getMap());
-        this.add(mapPanel, BorderLayout.NORTH);
+        this.add(mapPanel, BorderLayout.CENTER);
+
+        // Add Commands Panel
+        this.commandsPanel = createCommandsPanel();
+        this.add(commandsPanel, BorderLayout.EAST);
+
+        // Set preferred size for commandsPanel (for visibility)
+        commandsPanel.setPreferredSize(new Dimension(400, 500));
 
         // Add KeyListener to handle arrow key events
         this.setFocusable(true);
         this.addKeyListener(this);
+    }
+
+    private JPanel createCommandsPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 1)); // vertical layout
+
+        // List of commands
+        String[] commands = {
+                "Commandes disponibles :\n" +
+                        "Haut : Déplacer le joueur vers le haut \n" +
+                        "Bas : Déplacer le joueur vers le bas\n" +
+                        "Gauche : Déplacer le joueur vers la gauche\n" +
+                        "Droite : Déplacer le joueur vers }la droite",
+        };
+
+        for (String command : commands) {
+            JLabel label = new JLabel(command);
+            label.setForeground(Color.BLACK); // Ensure text color is visible
+            panel.add(label);
+        }
+
+        return panel;
     }
 
     @Override
@@ -79,17 +110,25 @@ public class GamePanel extends JPanel implements KeyListener {
 
     @Override
     public Dimension getPreferredSize() {
+        // return new Dimension(1000, 1000);
         return new Dimension(800, 500);
     }
-
-    public void displayCommands() {
-        String commands = "Commandes disponibles :\n" +
-                "UP : Déplacer le joueur vers le haut\n" +
-                "DOWN : Déplacer le joueur vers le bas\n" +
-                "LEFT : Déplacer le joueur vers la gauche\n" +
-                "RIGHT : Déplacer le joueur vers la droite\n" +
-                "H : Afficher les commandes disponibles";
-        JOptionPane.showMessageDialog(null, commands, "Commandes",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
 }
+
+// // Listes des commandes
+// String[] commands = {
+// "Commandes disponibles :\n" +
+// "Haut : Déplacer le joueur vers le haut\n" +
+// "Bas : Déplacer le joueur vers le bas\n" +
+// "Gauche : Déplacer le joueur vers la gauche\n" +
+// "Droite : Déplacer le joueur vers la droite\n",
+// };
+
+// commandsPanel.setLayout(new GridLayout(0, 1));
+
+// for (String command : commands) {
+// commandsPanel.add(new JLabel(command));
+// }
+
+// add(commandsPanel, BorderLayout.EAST);
+// setVisible(true);
