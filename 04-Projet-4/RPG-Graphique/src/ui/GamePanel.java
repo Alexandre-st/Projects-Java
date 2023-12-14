@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements KeyListener {
         this.add(commandsPanel, BorderLayout.EAST);
 
         // Set preferred size for commandsPanel (for visibility)
-        commandsPanel.setPreferredSize(new Dimension(400, 500));
+        commandsPanel.setPreferredSize(new Dimension(300, 100));
 
         // Add KeyListener to handle arrow key events
         this.setFocusable(true);
@@ -43,11 +43,11 @@ public class GamePanel extends JPanel implements KeyListener {
 
         // List of commands
         String[] commands = {
-                "Commandes disponibles :\n" +
-                        "Haut : Déplacer le joueur vers le haut \n" +
-                        "Bas : Déplacer le joueur vers le bas\n" +
-                        "Gauche : Déplacer le joueur vers la gauche\n" +
-                        "Droite : Déplacer le joueur vers }la droite",
+                "Commandes disponibles :",
+                "Haut : Déplacer le joueur vers le haut",
+                "Bas : Déplacer le joueur vers le bas",
+                "Gauche : Déplacer le joueur vers la gauche",
+                "Droite : Déplacer le joueur vers la droite"
         };
 
         for (String command : commands) {
@@ -114,21 +114,3 @@ public class GamePanel extends JPanel implements KeyListener {
         return new Dimension(800, 500);
     }
 }
-
-// // Listes des commandes
-// String[] commands = {
-// "Commandes disponibles :\n" +
-// "Haut : Déplacer le joueur vers le haut\n" +
-// "Bas : Déplacer le joueur vers le bas\n" +
-// "Gauche : Déplacer le joueur vers la gauche\n" +
-// "Droite : Déplacer le joueur vers la droite\n",
-// };
-
-// commandsPanel.setLayout(new GridLayout(0, 1));
-
-// for (String command : commands) {
-// commandsPanel.add(new JLabel(command));
-// }
-
-// add(commandsPanel, BorderLayout.EAST);
-// setVisible(true);
