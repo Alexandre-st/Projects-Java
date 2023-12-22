@@ -1,0 +1,8 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "/Users/alexandresaint-prix/Downloads/Cours-JAVA/**/*.jar",
+    "/Users/alexandresaint-prix/Downloads/jogamp-all-platforms/jar/gluegen-rt.jar",
+    "/Users/alexandresaint-prix/Downloads/jogamp-all-platforms/jar/jogl-all.jar"
+  ]
+}
