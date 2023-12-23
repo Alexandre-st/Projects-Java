@@ -15,6 +15,15 @@ public abstract class GraphicalObject {
     this.b = b;
   }
 
+  // Add getters and setters for posX
+  public float getPosX() {
+    return posX;
+  }
+
+  public void setPosX(float posX) {
+    this.posX = posX;
+  }
+
   public abstract void display_normalized(GL2 gl);
 
   public void display(GL2 gl) {

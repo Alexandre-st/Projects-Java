@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
@@ -10,7 +12,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.Animator;
 
-public class MainSquares extends GLCanvas implements GLEventListener {
+public class MainSquares extends GLCanvas implements GLEventListener, KeyListener {
   private ArrayList<GraphicalObject> objects3D;
   private ArrayList<GraphicalObject> enemis;
   private Square square1;
@@ -29,8 +31,26 @@ public class MainSquares extends GLCanvas implements GLEventListener {
 
   public MainSquares() {
     this.addGLEventListener(this);
+    this.addKeyListener(this);
+    this.setFocusable(true);
     this.objects3D = new ArrayList<GraphicalObject>();
     this.enemis = new ArrayList<GraphicalObject>();
+  }
+
+  // Method to move the square left
+  private void moveLeft() {
+    float currentX = square1.getPosX();
+    square1.setPosX(currentX - 1.0f); // Adjust the value for movement speed
+    // Repaint the canvas to reflect the change
+    this.repaint();
+  }
+
+  // Method to move the square right
+  private void moveRight() {
+    float currentX = square1.getPosX();
+    square1.setPosX(currentX + 1.0f); // Adjust the value for movement speed
+    // Repaint the canvas to reflect the change
+    this.repaint();
   }
 
   @Override
@@ -50,6 +70,27 @@ public class MainSquares extends GLCanvas implements GLEventListener {
 
   @Override
   public void dispose(GLAutoDrawable arg0) {
+  }
+
+  // KeyListener methods
+  @Override
+  public void keyPressed(KeyEvent e) {
+    int key = e.getKeyCode();
+    if (key == KeyEvent.VK_LEFT) {
+      moveLeft(); // Method to move the square left
+    } else if (key == KeyEvent.VK_RIGHT) {
+      moveRight(); // Method to move the square right
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+    // Not used, but needed for implementing KeyListener
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+    // Not used, but needed for implementing KeyListener
   }
 
   @Override
@@ -95,4 +136,5 @@ public class MainSquares extends GLCanvas implements GLEventListener {
     gl.glMatrixMode(GL2.GL_MODELVIEW);
     gl.glLoadIdentity();
   }
+
 }
