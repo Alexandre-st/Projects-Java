@@ -12,6 +12,7 @@ import com.jogamp.opengl.util.Animator;
 
 public class MainSquares extends GLCanvas implements GLEventListener {
   private ArrayList<GraphicalObject> objects3D;
+  private ArrayList<GraphicalObject> enemis;
   private Square square1;
 
   public static void main(String[] args) {
@@ -29,6 +30,7 @@ public class MainSquares extends GLCanvas implements GLEventListener {
   public MainSquares() {
     this.addGLEventListener(this);
     this.objects3D = new ArrayList<GraphicalObject>();
+    this.enemis = new ArrayList<GraphicalObject>();
   }
 
   @Override
@@ -40,6 +42,10 @@ public class MainSquares extends GLCanvas implements GLEventListener {
     for (GraphicalObject obj : this.objects3D) {
       obj.display(gl);
     }
+
+    for (GraphicalObject obj : this.enemis) {
+      obj.display(gl);
+    }
   }
 
   @Override
@@ -48,6 +54,8 @@ public class MainSquares extends GLCanvas implements GLEventListener {
 
   @Override
   public void init(GLAutoDrawable drawable) {
+    float x = -16f; // To define the default position of the squares on x axis
+    float y = 4f; // To define the default position of the squares on y axis
     GL2 gl = drawable.getGL().getGL2(); // Init the background
     // gl.glShadeModel(GL2.GL_SMOOTH);
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
@@ -56,7 +64,20 @@ public class MainSquares extends GLCanvas implements GLEventListener {
     gl.glDepthFunc(GL2.GL_LEQUAL); // The Type Of Depth Testing To Do
     gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST); // Really Nice Perspective Calculations
     // Intialise all graphical objects
-    this.square1 = new Square(0f, 0f, -40f, 4f, 1.0f, 0.0f);
+    this.square1 = new Square(0f, -12f, -40f, 4f, 1.0f, 1.0f, 1.0f);
+
+    for (int i = 7; i >= 0; i--) {
+      // Create a green square
+      Square greenSquare = new Square(x, y, -40f, 4f, 0.0f, 1.0f, 0.0f);
+      // Add it to the list of objects
+      this.enemis.add(greenSquare);
+      x += 10f; // Increment the x position
+
+      if (i % 4 == 0) {
+        x = -16f; // Reset the x position
+        y += 6f; // Increment the y position
+      }
+    }
   }
 
   @Override

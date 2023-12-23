@@ -2,16 +2,17 @@ import com.jogamp.opengl.GL2;
 
 public abstract class GraphicalObject {
   private float posX, posY, posZ;
-  private float r, g;
+  private float r, g, b;
   private float scale;
 
-  public GraphicalObject(float pX, float pY, float pZ, float scale, float r, float g) {
+  public GraphicalObject(float pX, float pY, float pZ, float scale, float r, float g, float b) {
     this.posX = pX;
     this.posY = pY;
     this.posZ = pZ;
     this.scale = scale;
     this.r = r;
     this.g = g;
+    this.b = b;
   }
 
   public abstract void display_normalized(GL2 gl);
@@ -20,7 +21,7 @@ public abstract class GraphicalObject {
     gl.glPushMatrix();
     gl.glTranslatef(this.posX, this.posY, this.posZ);
     gl.glScalef(this.scale, this.scale, this.scale);
-    gl.glColor3f(this.r, this.g, this.g);
+    gl.glColor3f(this.r, this.g, this.b);
     this.display_normalized(gl);
     gl.glPopMatrix();
   }
