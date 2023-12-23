@@ -7,24 +7,30 @@ import javax.swing.JFrame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.Animator;
+import com.jogamp.opengl.util.awt.TextRenderer;
+import java.awt.Font;
 
 public class MainSquares extends GLCanvas implements GLEventListener, KeyListener {
   private ArrayList<GraphicalObject> objects3D;
   private ArrayList<GraphicalObject> enemis;
   private ArrayList<Projectile> projectiles = new ArrayList<>();
   private Square square1;
-  private static final float LEFT_BOUNDARY = -20.0f;
-  private static final float RIGHT_BOUNDARY = 20.0f;
+  private static final float LEFT_BOUNDARY = -40.0f;
+  private static final float RIGHT_BOUNDARY = 40.0f;
 
-  private float alienSpeed = 0.001f; // Speed of alien movement
+  private float alienSpeed = 0.005f; // Speed of alien movement
   private boolean movingRight = true; // Direction of movement
-  private static final float collisionThreshold = 2.0f;
+  private boolean isGameOver = false;
+  // Distance between projectile and alien to be considered a collision
+  private static final float collisionThreshold = 3.0f;
+  // private TextRenderer renderer;
 
   public static void main(String[] args) {
     GLCanvas canvas = new MainSquares();
@@ -44,6 +50,8 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
     this.setFocusable(true);
     this.objects3D = new ArrayList<GraphicalObject>();
     this.enemis = new ArrayList<GraphicalObject>();
+    // Initialize the text renderer
+    // renderer = new TextRenderer(new Font("SansSerif", Font.BOLD, 36));
   }
 
   // Method to move the square left
@@ -93,6 +101,17 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
       }
     }
     projectiles.removeAll(projectilesToRemove);
+
+    if (!isGameOver) {
+      // Check for win condition
+      if (checkWinCondition()) {
+        isGameOver = true;
+        displayWinMessage(gl);
+      }
+    } else {
+      // Display the win message
+      displayWinMessage(gl);
+    }
   }
 
   private boolean checkCollisionWithAliens(Projectile projectile) {
@@ -134,6 +153,33 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
     }
   }
 
+  private boolean checkWinCondition() {
+    return enemis.isEmpty();
+  }
+
+  private void displayWinMessage(GL2 gl) {
+    // Display a win message on the screen
+    // renderer.beginRendering(this.getWidth(), this.getHeight());
+    // renderer.setColor(1.0f, 1.0f, 1.0f, 1.0f); // Set the color to white
+
+    // Center the text
+    // String message = "You Win! Press R to Restart";
+    // int width = renderer.getFont().getWidth(message);
+    // int height = renderer.getFont().getHeight();
+    // renderer.draw(message, (this.getWidth() - width) / 2, (this.getHeight() -
+    // height) / 2);
+
+    // renderer.endRendering();
+  }
+
+  private void restartGame() {
+    // Reset the game state
+    enemis = initializeAliens(); // You'll need to implement this method
+    projectiles.clear();
+    isGameOver = false;
+    // Other necessary resets (like resetting the player position)
+  }
+
   @Override
   public void dispose(GLAutoDrawable arg0) {
   }
@@ -154,6 +200,10 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
           0.1f);
       projectiles.add(newProjectile);
     }
+
+    if (isGameOver && e.getKeyCode() == KeyEvent.VK_R) {
+      restartGame();
+    }
   }
 
   @Override
@@ -164,10 +214,27 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
   public void keyTyped(KeyEvent e) {
   }
 
-  @Override
-  public void init(GLAutoDrawable drawable) {
+  private ArrayList<GraphicalObject> initializeAliens() {
+    ArrayList<GraphicalObject> aliens = new ArrayList<GraphicalObject>();
     float x = -16f; // To define the default position of the squares on x axis
     float y = 4f; // To define the default position of the squares on y axis
+    for (int i = 31; i >= 0; i--) {
+      // Create a green square
+      Square greenSquare = new Square(x, y, -80f, 4f, 0.0f, 1.0f, 0.0f);
+      // Add it to the list of objects
+      aliens.add(greenSquare);
+      x += 10f; // Increment the x position
+
+      if (i % 4 == 0) {
+        x = -16f; // Reset the x position
+        y += 6f; // Increment the y position
+      }
+    }
+    return aliens;
+  }
+
+  @Override
+  public void init(GLAutoDrawable drawable) {
     GL2 gl = drawable.getGL().getGL2(); // Init the background
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
     gl.glClearDepth(1.0f); // Depth Buffer Setup
@@ -177,18 +244,7 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
     // Intialise all graphical objects
     this.square1 = new Square(0f, -12f, -40f, 4f, 1.0f, 1.0f, 1.0f);
 
-    for (int i = 7; i >= 0; i--) {
-      // Create a green square
-      Square greenSquare = new Square(x, y, -40f, 4f, 0.0f, 1.0f, 0.0f);
-      // Add it to the list of objects
-      this.enemis.add(greenSquare);
-      x += 10f; // Increment the x position
-
-      if (i % 4 == 0) {
-        x = -16f; // Reset the x position
-        y += 6f; // Increment the y position
-      }
-    }
+    this.enemis = initializeAliens();
   }
 
   @Override
