@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -15,12 +17,14 @@ import com.jogamp.opengl.util.Animator;
 public class MainSquares extends GLCanvas implements GLEventListener, KeyListener {
   private ArrayList<GraphicalObject> objects3D;
   private ArrayList<GraphicalObject> enemis;
+  private ArrayList<Projectile> projectiles = new ArrayList<>();
   private Square square1;
-  private static final float LEFT_BOUNDARY = -20.0f; // Adjust these values based on your setup
+  private static final float LEFT_BOUNDARY = -20.0f;
   private static final float RIGHT_BOUNDARY = 20.0f;
 
   private float alienSpeed = 0.001f; // Speed of alien movement
   private boolean movingRight = true; // Direction of movement
+  private static final float collisionThreshold = 2.0f;
 
   public static void main(String[] args) {
     GLCanvas canvas = new MainSquares();
@@ -76,6 +80,35 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
 
     // update positions of enemies before drawing
     updateEnemyPositions();
+
+    // Update and display projectiles
+    List<Projectile> projectilesToRemove = new ArrayList<>();
+    for (Projectile projectile : projectiles) {
+      projectile.move();
+      projectile.display(gl);
+
+      // Check for collision with any alien
+      if (checkCollisionWithAliens(projectile)) {
+        projectilesToRemove.add(projectile);
+      }
+    }
+    projectiles.removeAll(projectilesToRemove);
+  }
+
+  private boolean checkCollisionWithAliens(Projectile projectile) {
+    boolean collisionDetected = false;
+    Iterator<GraphicalObject> it = enemis.iterator();
+    while (it.hasNext()) {
+      Square alien = (Square) it.next();
+
+      if (Math.abs(alien.getPosX() - projectile.getPosX()) < collisionThreshold &&
+          Math.abs(alien.getPosY() - projectile.getPosY()) < collisionThreshold) {
+        it.remove(); // Remove the alien
+        collisionDetected = true;
+        break; // Assuming one projectile can only hit one alien
+      }
+    }
+    return collisionDetected;
   }
 
   private void updateEnemyPositions() {
@@ -114,16 +147,21 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
     } else if (key == KeyEvent.VK_RIGHT) {
       moveRight(); // Method to move the square right
     }
+
+    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+      // Create a projectile
+      Projectile newProjectile = new Projectile(square1.getPosX(), square1.getPosY(), -40f, 1.0f, 0.5f, 0.5f, 0.5f,
+          0.1f);
+      projectiles.add(newProjectile);
+    }
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-    // Not used, but needed for implementing KeyListener
   }
 
   @Override
   public void keyTyped(KeyEvent e) {
-    // Not used, but needed for implementing KeyListener
   }
 
   @Override
@@ -131,7 +169,6 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
     float x = -16f; // To define the default position of the squares on x axis
     float y = 4f; // To define the default position of the squares on y axis
     GL2 gl = drawable.getGL().getGL2(); // Init the background
-    // gl.glShadeModel(GL2.GL_SMOOTH);
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
     gl.glClearDepth(1.0f); // Depth Buffer Setup
     gl.glEnable(GL2.GL_DEPTH_TEST); // Enables Depth Testing

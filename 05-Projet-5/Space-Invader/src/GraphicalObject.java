@@ -15,7 +15,6 @@ public abstract class GraphicalObject {
     this.b = b;
   }
 
-  // Add getters and setters for posX
   public float getPosX() {
     return posX;
   }
