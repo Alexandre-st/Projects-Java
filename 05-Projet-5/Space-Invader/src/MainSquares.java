@@ -16,6 +16,11 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
   private ArrayList<GraphicalObject> objects3D;
   private ArrayList<GraphicalObject> enemis;
   private Square square1;
+  private static final float LEFT_BOUNDARY = -20.0f; // Adjust these values based on your setup
+  private static final float RIGHT_BOUNDARY = 20.0f;
+
+  private float alienSpeed = 0.001f; // Speed of alien movement
+  private boolean movingRight = true; // Direction of movement
 
   public static void main(String[] args) {
     GLCanvas canvas = new MainSquares();
@@ -40,17 +45,19 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
   // Method to move the square left
   private void moveLeft() {
     float currentX = square1.getPosX();
-    square1.setPosX(currentX - 1.0f); // Adjust the value for movement speed
-    // Repaint the canvas to reflect the change
-    this.repaint();
+    if (currentX > LEFT_BOUNDARY) {
+      square1.setPosX(currentX - 2.0f); // Adjust the value for movement speed
+      this.repaint();
+    }
   }
 
   // Method to move the square right
   private void moveRight() {
     float currentX = square1.getPosX();
-    square1.setPosX(currentX + 1.0f); // Adjust the value for movement speed
-    // Repaint the canvas to reflect the change
-    this.repaint();
+    if (currentX < RIGHT_BOUNDARY) {
+      square1.setPosX(currentX + 2.0f); // Adjust the value for movement speed
+      this.repaint();
+    }
   }
 
   @Override
@@ -65,6 +72,32 @@ public class MainSquares extends GLCanvas implements GLEventListener, KeyListene
 
     for (GraphicalObject obj : this.enemis) {
       obj.display(gl);
+    }
+
+    // update positions of enemies before drawing
+    updateEnemyPositions();
+  }
+
+  private void updateEnemyPositions() {
+    float maxX = -Float.MAX_VALUE;
+    float minX = Float.MAX_VALUE;
+
+    for (GraphicalObject obj : enemis) {
+      Square square = (Square) obj;
+      float newX = square.getPosX() + (movingRight ? alienSpeed : -alienSpeed);
+      square.setPosX(newX);
+
+      maxX = Math.max(maxX, newX);
+      minX = Math.min(minX, newX);
+    }
+
+    // Check boundaries and move down if needed
+    if (maxX > RIGHT_BOUNDARY || minX < LEFT_BOUNDARY) {
+      movingRight = !movingRight; // change direction
+      for (GraphicalObject obj : enemis) {
+        Square square = (Square) obj;
+        square.setPosY(square.getPosY() - 1.0f); // Move down
+      }
     }
   }
 

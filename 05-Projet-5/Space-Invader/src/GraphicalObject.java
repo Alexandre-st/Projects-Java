@@ -20,8 +20,16 @@ public abstract class GraphicalObject {
     return posX;
   }
 
+  public float getPosY() {
+    return posY;
+  }
+
   public void setPosX(float posX) {
     this.posX = posX;
+  }
+
+  public void setPosY(float posY) {
+    this.posY = posY;
   }
 
   public abstract void display_normalized(GL2 gl);
